@@ -1,0 +1,673 @@
+-------------------- Log Start | Thu Jan 25 18:23:33 2024 --------------------
+data_path: /home/pi/printer_data
+is_default_data_path: False
+config_file: /home/pi/printer_data/config/moonraker.conf
+startup_warnings: []
+verbose: False
+debug: False
+asyncio_debug: False
+is_backup_config: False
+is_python_package: False
+instance_uuid: 72a184d86eaa4c089a5f2fdb9c81fdee
+unix_socket_path: /home/pi/printer_data/comms/moonraker.sock
+software_version: v0.8.0-206-g9ad8fed
+git_branch: master
+git_remote: origin
+git_repo_url: https://github.com/Arksine/moonraker.git
+modified_files: []
+unofficial_components: []
+log_file: /home/pi/printer_data/logs/moonraker.log
+python_version: 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0]
+msgspec_enabled: False
+uvloop_enabled: False
+
+#################### Moonraker Configuration ####################
+
+[server]
+host = 0.0.0.0
+port = 7125
+klippy_uds_address = /home/pi/printer_data/comms/klippy.sock
+
+[authorization]
+trusted_clients = 
+	10.0.0.0/8
+	127.0.0.0/8
+	169.254.0.0/16
+	172.16.0.0/12
+	192.168.0.0/16
+	FE80::/10
+	::1/128
+cors_domains = 
+	*.lan
+	*.local
+	*://localhost
+	*://localhost:*
+	*://my.mainsail.xyz
+	*://app.fluidd.xyz
+
+[octoprint_compat]
+
+[history]
+
+[update_manager]
+channel = dev
+refresh_interval = 168
+
+[update_manager mainsail-config]
+type = git_repo
+primary_branch = master
+path = ~/mainsail-config
+origin = https://github.com/mainsail-crew/mainsail-config.git
+managed_services = klipper
+
+[update_manager mainsail]
+type = web
+channel = stable
+repo = mainsail-crew/mainsail
+path = ~/mainsail
+
+[update_manager mobileraker]
+type = git_repo
+path = /home/pi/mobileraker_companion
+origin = https://github.com/Clon1998/mobileraker_companion.git
+primary_branch = main
+managed_services = mobileraker
+env = /home/pi/mobileraker-env/bin/python
+requirements = scripts/mobileraker-requirements.txt
+install_script = scripts/install-mobileraker-companion.sh
+
+#################################################################
+All Configuration Files:
+/home/pi/printer_data/config/moonraker.conf
+#################################################################
+Unsafe Shutdown Count: 49
+
+System Info:
+
+***python***
+  version: (3, 11, 2, 'final', 0)
+  version_string: 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0]
+
+***cpu_info***
+  cpu_count: 4
+  bits: 32bit
+  processor: aarch64
+  cpu_desc: 
+  serial_number: 10000000e248e69c
+  hardware_desc: BCM2835
+  model: Raspberry Pi 4 Model B Rev 1.5
+  total_memory: 7998652
+  memory_units: kB
+
+***sd_info***
+  manufacturer_id: 03
+  manufacturer: Sandisk
+  oem_id: 5344
+  product_name: SL32G
+  product_revision: 8.0
+  serial_number: 51c4bd62
+  manufacturer_date: 6/2022
+  capacity: 29.7 GiB
+  total_bytes: 31914983424
+
+***distribution***
+  name: Raspbian GNU/Linux 12 (bookworm)
+  id: raspbian
+  version: 12
+  version_parts: {'major': '12', 'minor': '', 'build_number': ''}
+  like: debian
+  codename: bookworm
+  release_info: {}
+
+***virtualization***
+  virt_type: none
+  virt_identifier: none
+
+***network***
+
+***canbus***
+
+***Allowed Services***
+  klipper_mcu
+  webcamd
+  MoonCord
+  KlipperScreen
+  moonraker-telegram-bot
+  moonraker-obico
+  sonar
+  crowsnest
+  octoeverywhere
+  ratos-configurator
+  mobileraker
+
+Systemd unit moonraker.service:
+unit_name: moonraker.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['sysinit.target', '-.mount', 'system.slice', 'network-online.target']
+**After=['systemd-journald.socket', 'sysinit.target', '-.mount', 'system.slice', 'network-online.target', 'basic.target']
+**SupplementaryGroups=['moonraker-admin']
+**EnvironmentFiles=/home/pi/printer_data/systemd/moonraker.env
+**ExecStart=/home/pi/moonraker-env/bin/python $MOONRAKER_ARGS
+**WorkingDirectory=/home/pi/moonraker
+**FragmentPath=/etc/systemd/system/moonraker.service
+**Description=API Server for Klipper SV1
+**User=pi
+
+Systemd unit klipper.service:
+unit_name: klipper.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['sysinit.target', 'system.slice', '-.mount']
+**After=['klipper-mcu.service', 'systemd-journald.socket', 'sysinit.target', '-.mount', 'system.slice', 'network-online.target', 'basic.target']
+**SupplementaryGroups=[]
+**EnvironmentFiles=/home/pi/printer_data/systemd/klipper.env
+**ExecStart=/home/pi/klippy-env/bin/python $KLIPPER_ARGS
+**WorkingDirectory=/home/pi/klipper
+**FragmentPath=/etc/systemd/system/klipper.service
+**Description=Klipper 3D Printer Firmware SV1
+**User=pi
+Git Repo moonraker: No warnings detected
+Git Repo klipper: Warnings detected:
+  Detached HEAD detected
+Git Repo mainsail-config: No warnings detected
+Git Repo mobileraker: No warnings detected
+Klipper Version: v0.12.0-0-g0d67d9c4
+2024-01-25 19:23:33,423 [machine.py:_find_public_ip()] - Detected Local IP: 172.16.60.125
+2024-01-25 19:23:38,566 [authorization.py:_check_trusted_connection()] - Trusted Connection Detected, IP: 172.16.60.129
+2024-01-25 19:23:38,567 [app.py:log_request()] - 101 GET /websocket (172.16.60.129) [_TRUSTED_USER_] 1.92ms
+2024-01-25 19:23:38,567 [websockets.py:open()] - Websocket Opened: ID: 3890912144, Proxied: True, User Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0, Host Name: voron.local
+2024-01-25 19:23:38,579 [websockets.py:_handle_identify()] - Websocket 3890912144 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 19:25:12,893 [authorization.py:_prune_conn_handler()] - Trusted Connection Expired, IP: 127.0.0.1
+2024-01-25 19:38:02,602 [app.py:log_request()] - 101 GET /websocket (172.16.60.129) [_TRUSTED_USER_] 2.98ms
+2024-01-25 19:38:02,603 [websockets.py:open()] - Websocket Opened: ID: 3909188656, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 19:38:02,611 [websockets.py:_handle_identify()] - Websocket 3909188656 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 19:40:08,600 [klippy_connection.py:wait()] - Request 'gcode/script' pending: 60.00 seconds
+2024-01-25 19:41:08,602 [klippy_connection.py:wait()] - Request 'gcode/script' pending: 120.00 seconds
+2024-01-25 19:43:36,469 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2024-01-25 19:43:37,729 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2024-01-25 19:43:40,806 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2024-01-25 19:43:40,807 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2024-01-25 19:43:41,057 [job_state.py:_handle_started()] - Job state initialized: standby
+2024-01-25 19:43:41,332 [klippy_connection.py:_check_ready()] - Klippy ready
+2024-01-25 19:43:42,076 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'extruder']
+2024-01-25 19:43:48,511 [app.py:prepare()] - Upload Request Received from 172.16.60.129
+Content-Type: multipart/form-data; boundary=------------------------a6d262c1d54c4f13
+2024-01-25 19:43:48,649 [app.py:post()] - Processing Uploaded File: spool_ABS_28m56s.gcode
+2024-01-25 19:43:48,877 [shell_command.py:pipe_data_received()] - INFO:metadata:Object Processing is disabled
+
+2024-01-25 19:43:49,016 [shell_command.py:_check_proc_success()] - Command (/home/pi/moonraker-env/bin/python /home/pi/moonraker/moonraker/components/file_manager/metadata.py -p /home/pi/printer_data/gcodes -f "spool_ABS_28m56s.gcode") successfully finished
+2024-01-25 19:43:49,028 [app.py:log_request()] - 201 POST /api/files/local (172.16.60.129) [_TRUSTED_USER_] 518.13ms
+2024-01-25 19:43:49,078 [job_state.py:_status_update()] - Job Started: spool_ABS_28m56s.gcode
+2024-01-25 20:34:10,784 [websockets.py:on_close()] - Websocket Closed: ID: 3909188656 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 8.18
+2024-01-25 20:34:11,186 [app.py:log_request()] - 101 GET /websocket (172.16.60.129) [_TRUSTED_USER_] 2.79ms
+2024-01-25 20:34:11,186 [websockets.py:open()] - Websocket Opened: ID: 3890765968, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 20:34:11,214 [websockets.py:_handle_identify()] - Websocket 3890765968 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 20:34:11,731 [websockets.py:on_close()] - Websocket Closed: ID: 3890765968 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 0.55
+2024-01-25 20:34:12,009 [app.py:log_request()] - 101 GET /websocket (172.16.60.129) [_TRUSTED_USER_] 1.34ms
+2024-01-25 20:34:12,010 [websockets.py:open()] - Websocket Opened: ID: 3890756176, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 20:34:12,018 [websockets.py:_handle_identify()] - Websocket 3890756176 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 20:34:16,390 [websockets.py:on_close()] - Websocket Closed: ID: 3890756176 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 4.38
+2024-01-25 20:34:16,632 [app.py:log_request()] - 101 GET /websocket (172.16.60.129) [_TRUSTED_USER_] 2.66ms
+2024-01-25 20:34:16,633 [websockets.py:open()] - Websocket Opened: ID: 4141922832, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 20:34:16,640 [websockets.py:_handle_identify()] - Websocket 4141922832 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 20:37:21,107 [authorization.py:_check_trusted_connection()] - Trusted Connection Detected, IP: 172.16.60.147
+2024-01-25 20:37:21,109 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 3.40ms
+2024-01-25 20:37:21,109 [websockets.py:open()] - Websocket Opened: ID: 3890766256, Proxied: True, User Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0, Host Name: voron.local
+2024-01-25 20:37:21,117 [websockets.py:_handle_identify()] - Websocket 3890766256 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 20:37:31,986 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2024-01-25 20:37:33,244 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2024-01-25 20:37:36,339 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2024-01-25 20:37:36,340 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2024-01-25 20:37:36,590 [job_state.py:_handle_started()] - Job state initialized: standby
+2024-01-25 20:37:36,864 [klippy_connection.py:_check_ready()] - Klippy ready
+2024-01-25 20:37:37,852 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'extruder']
+2024-01-25 20:45:17,871 [websockets.py:on_close()] - Websocket Closed: ID: 4141922832 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 1.15
+2024-01-25 20:45:18,108 [app.py:log_request()] - 101 GET /websocket (172.16.60.129) [_TRUSTED_USER_] 3.22ms
+2024-01-25 20:45:18,109 [websockets.py:open()] - Websocket Opened: ID: 3909845328, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 20:45:18,117 [websockets.py:_handle_identify()] - Websocket 3909845328 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 20:45:26,720 [websockets.py:on_close()] - Websocket Closed: ID: 3909845328 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 8.61
+2024-01-25 20:45:26,942 [app.py:log_request()] - 101 GET /websocket (172.16.60.129) [_TRUSTED_USER_] 2.37ms
+2024-01-25 20:45:26,943 [websockets.py:open()] - Websocket Opened: ID: 3890939152, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 20:45:26,951 [websockets.py:_handle_identify()] - Websocket 3890939152 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 20:46:20,319 [app.py:prepare()] - Upload Request Received from 172.16.60.147
+Content-Type: multipart/form-data; boundary=------------------------a100fc1396b7b778
+2024-01-25 20:46:21,129 [app.py:post()] - Processing Uploaded File: handle_outer_part_ABS_9h3m.gcode
+2024-01-25 20:46:21,324 [shell_command.py:pipe_data_received()] - INFO:metadata:Object Processing is disabled
+
+2024-01-25 20:46:21,443 [shell_command.py:_check_proc_success()] - Command (/home/pi/moonraker-env/bin/python /home/pi/moonraker/moonraker/components/file_manager/metadata.py -p /home/pi/printer_data/gcodes -f "handle_outer_part_ABS_9h3m.gcode") successfully finished
+2024-01-25 20:46:21,453 [app.py:log_request()] - 201 POST /api/files/local (172.16.60.147) [_TRUSTED_USER_] 1140.73ms
+2024-01-25 20:46:21,584 [job_state.py:_status_update()] - Job Started: handle_outer_part_ABS_9h3m.gcode
+2024-01-25 21:00:49,794 [machine.py:_find_public_ip()] - Detected Local IP: 172.16.60.125
+2024-01-25 21:00:59,804 [machine.py:_find_public_ip()] - Detected Local IP: 172.16.60.125
+2024-01-25 21:06:09,693 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 1.22ms
+2024-01-25 21:06:09,693 [websockets.py:open()] - Websocket Opened: ID: 3909250448, Proxied: True, User Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0, Host Name: 172.16.60.149
+2024-01-25 21:06:09,702 [websockets.py:_handle_identify()] - Websocket 3909250448 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 21:06:38,214 [authorization.py:_check_trusted_connection()] - Trusted Connection Detected, IP: 172.16.60.150
+2024-01-25 21:06:38,215 [app.py:log_request()] - 101 GET /websocket (172.16.60.150) [_TRUSTED_USER_] 1.52ms
+2024-01-25 21:06:38,215 [websockets.py:open()] - Websocket Opened: ID: 3909758000, Proxied: True, User Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36, Host Name: 172.16.60.149
+2024-01-25 21:06:38,242 [websockets.py:_handle_identify()] - Websocket 3909758000 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 21:09:21,613 [job_state.py:_status_update()] - Job Started: handle_outer_part_ABS_9h3m.gcode
+2024-01-25 21:19:31,290 [machine.py:_find_public_ip()] - Detected Local IP: 172.16.60.125
+2024-01-25 21:19:38,028 [websockets.py:on_close()] - Websocket Closed: ID: 3909758000 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 0.08
+2024-01-25 21:19:39,586 [app.py:log_request()] - 101 GET /websocket (172.16.60.150) [_TRUSTED_USER_] 2.35ms
+2024-01-25 21:19:39,586 [websockets.py:open()] - Websocket Opened: ID: 3909757360, Proxied: True, User Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36, Host Name: 172.16.60.149
+2024-01-25 21:19:39,794 [websockets.py:_handle_identify()] - Websocket 3909757360 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 21:20:07,170 [websockets.py:write_to_socket()] - Websocket closed while writing: 3890939152
+2024-01-25 21:20:11,945 [websockets.py:on_close()] - Websocket Closed: ID: 3890939152 Close Code: None, Close Reason: None, Pong Time Elapsed: 45.00
+2024-01-25 21:22:23,735 [websockets.py:on_close()] - Websocket Closed: ID: 3909250448 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 4.04
+2024-01-25 21:22:24,126 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 2.38ms
+2024-01-25 21:22:24,126 [websockets.py:open()] - Websocket Opened: ID: 3909250800, Proxied: True, User Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0, Host Name: 172.16.60.149
+2024-01-25 21:22:24,133 [websockets.py:_handle_identify()] - Websocket 3909250800 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 21:22:31,984 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 2.29ms
+2024-01-25 21:22:31,984 [websockets.py:open()] - Websocket Opened: ID: 3909389296, Proxied: True, User Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:121.0) Gecko/20100101 Firefox/121.0, Host Name: voron.local
+2024-01-25 21:22:31,997 [websockets.py:_handle_identify()] - Websocket 3909389296 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 21:26:15,206 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 1.97ms
+2024-01-25 21:26:15,207 [websockets.py:open()] - Websocket Opened: ID: 3890974480, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 21:26:15,212 [websockets.py:_handle_identify()] - Websocket 3890974480 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 21:26:59,666 [websockets.py:write_to_socket()] - Websocket closed while writing: 3909757360
+2024-01-25 21:27:00,052 [websockets.py:on_close()] - Websocket Closed: ID: 3909757360 Close Code: None, Close Reason: None, Pong Time Elapsed: 39.85
+2024-01-25 21:28:40,705 [websockets.py:on_close()] - Websocket Closed: ID: 3909389296 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 8.70
+2024-01-25 21:37:10,451 [websockets.py:on_close()] - Websocket Closed: ID: 3909250800 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 6.32
+2024-01-25 21:50:04,795 [app.py:log_request()] - 101 GET /websocket (172.16.60.150) [_TRUSTED_USER_] 2.76ms
+2024-01-25 21:50:04,796 [websockets.py:open()] - Websocket Opened: ID: 3909247632, Proxied: True, User Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36, Host Name: 172.16.60.149
+2024-01-25 21:50:04,936 [websockets.py:_handle_identify()] - Websocket 3909247632 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 21:50:12,919 [authorization.py:_prune_conn_handler()] - Trusted Connection Expired, IP: 172.16.60.129
+2024-01-25 22:14:00,595 [websockets.py:on_close()] - Websocket Closed: ID: 3909247632 Close Code: None, Close Reason: None, Pong Time Elapsed: 2.80
+2024-01-25 22:16:54,643 [app.py:log_request()] - 101 GET /websocket (172.16.60.150) [_TRUSTED_USER_] 2.62ms
+2024-01-25 22:16:54,644 [websockets.py:open()] - Websocket Opened: ID: 3909277808, Proxied: True, User Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36, Host Name: 172.16.60.149
+2024-01-25 22:16:54,774 [websockets.py:_handle_identify()] - Websocket 3909277808 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:21:44,667 [websockets.py:write_to_socket()] - Websocket closed while writing: 3909277808
+2024-01-25 22:21:49,648 [websockets.py:on_close()] - Websocket Closed: ID: 3909277808 Close Code: None, Close Reason: None, Pong Time Elapsed: 43.34
+2024-01-25 22:22:27,741 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2024-01-25 22:22:29,001 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2024-01-25 22:22:32,082 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2024-01-25 22:22:32,085 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2024-01-25 22:22:32,334 [job_state.py:_handle_started()] - Job state initialized: standby
+2024-01-25 22:22:32,608 [klippy_connection.py:_check_ready()] - Klippy ready
+2024-01-25 22:22:33,595 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'extruder']
+2024-01-25 22:25:08,082 [websockets.py:on_close()] - Websocket Closed: ID: 3890974480 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 2.87
+2024-01-25 22:25:08,330 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 2.57ms
+2024-01-25 22:25:08,330 [websockets.py:open()] - Websocket Opened: ID: 3890797200, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 22:25:08,338 [websockets.py:_handle_identify()] - Websocket 3890797200 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:25:09,665 [websockets.py:on_close()] - Websocket Closed: ID: 3890797200 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 1.34
+2024-01-25 22:25:09,912 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 1.18ms
+2024-01-25 22:25:09,912 [websockets.py:open()] - Websocket Opened: ID: 3909183664, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 22:25:09,924 [websockets.py:_handle_identify()] - Websocket 3909183664 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:25:51,888 [websockets.py:on_close()] - Websocket Closed: ID: 3909183664 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 1.97
+2024-01-25 22:25:52,127 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 2.64ms
+2024-01-25 22:25:52,127 [websockets.py:open()] - Websocket Opened: ID: 3890793808, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 22:25:52,133 [websockets.py:_handle_identify()] - Websocket 3890793808 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:25:58,110 [websockets.py:on_close()] - Websocket Closed: ID: 3890793808 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 5.98
+2024-01-25 22:25:58,337 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 2.91ms
+2024-01-25 22:25:58,337 [websockets.py:open()] - Websocket Opened: ID: 3909455664, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 22:25:58,343 [websockets.py:_handle_identify()] - Websocket 3909455664 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:25:58,723 [websockets.py:on_close()] - Websocket Closed: ID: 3909455664 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 0.39
+2024-01-25 22:25:58,876 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 1.17ms
+2024-01-25 22:25:58,877 [websockets.py:open()] - Websocket Opened: ID: 3909197584, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 22:25:58,880 [websockets.py:_handle_identify()] - Websocket 3909197584 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:26:02,852 [websockets.py:on_close()] - Websocket Closed: ID: 3909197584 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 3.98
+2024-01-25 22:26:03,087 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 1.18ms
+2024-01-25 22:26:03,087 [websockets.py:open()] - Websocket Opened: ID: 3909195184, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 22:26:03,090 [websockets.py:_handle_identify()] - Websocket 3909195184 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:29:33,456 [app.py:prepare()] - Upload Request Received from 172.16.60.147
+Content-Type: multipart/form-data; boundary=---------------------------355867835838755126852952945685
+2024-01-25 22:29:33,477 [app.py:post()] - Processing Uploaded File: printer.cfg
+2024-01-25 22:29:33,487 [app.py:log_request()] - 201 POST /server/files/upload (172.16.60.147) [_TRUSTED_USER_] 32.39ms
+2024-01-25 22:29:34,564 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2024-01-25 22:29:35,826 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2024-01-25 22:29:38,508 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2024-01-25 22:29:38,509 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2024-01-25 22:29:38,759 [job_state.py:_handle_started()] - Job state initialized: standby
+2024-01-25 22:29:39,030 [klippy_connection.py:_check_ready()] - Klippy ready
+2024-01-25 22:29:40,272 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'extruder']
+2024-01-25 22:31:39,361 [base_deploy.py:log_info()] - PackageKit: Detected 81 package updates:
+bluez
+bluez-firmware
+dbus
+dbus-bin
+dbus-daemon
+dbus-session-bus-common
+dbus-system-bus-common
+dbus-user-session
+debianutils
+firmware-atheros
+firmware-brcm80211
+firmware-libertas
+firmware-misc-nonfree
+firmware-realtek
+kms++-utils
+libbluetooth3
+libcamera-apps-lite
+libcamera-ipa
+libcamera0.1
+libdbus-1-3
+libgssapi-krb5-2
+libk5crypto3
+libkms++0
+libkrb5-3
+libkrb5support0
+libnftables1
+libpam-chksshpwd
+libpam-modules
+libpam-modules-bin
+libpam-runtime
+libpam-systemd
+libpam0g
+libpisp-common
+libraspberrypi-dev
+libraspberrypi-doc
+libraspberrypi0
+libssl3
+libsystemd-shared
+libsystemd0
+libtiff6
+libudev1
+linux-compiler-gcc-12-arm
+linux-headers-rpi-v6
+linux-headers-rpi-v7
+linux-headers-rpi-v7l
+linux-image-rpi-v6
+linux-image-rpi-v7
+linux-image-rpi-v7l
+linux-image-rpi-v8
+linux-kbuild-6.1
+linux-libc-dev
+nftables
+openssh-client
+openssh-server
+openssh-sftp-server
+openssl
+raspberrypi-net-mods
+raspberrypi-sys-mods
+raspi-config
+raspi-firmware
+raspi-gpio
+raspi-utils
+rpi-eeprom
+ssh
+systemd
+systemd-sysv
+systemd-timesyncd
+udev
+libossp-uuid16
+libpisp1
+linux-headers-6.1.0-rpi7-common-rpi
+linux-headers-6.1.0-rpi7-rpi-v6
+linux-headers-6.1.0-rpi7-rpi-v7
+linux-headers-6.1.0-rpi7-rpi-v7l
+linux-image-6.1.0-rpi7-rpi-v6
+linux-image-6.1.0-rpi7-rpi-v7
+linux-image-6.1.0-rpi7-rpi-v7l
+linux-image-6.1.0-rpi7-rpi-v8
+rpicam-apps-lite
+uuid
+libraspberrypi-bin
+2024-01-25 22:31:39,387 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker status --porcelain -b) successfully finished
+2024-01-25 22:31:39,399 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker branch --list --no-color) successfully finished
+2024-01-25 22:31:39,410 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker remote get-url origin) successfully finished
+2024-01-25 22:31:40,496 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker fetch origin --prune --progress) successfully finished
+2024-01-25 22:31:40,506 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker merge-base --is-ancestor HEAD origin/master) successfully finished
+2024-01-25 22:31:40,512 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker rev-parse HEAD) successfully finished
+2024-01-25 22:31:40,527 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker describe --always --tags --long --dirty --abbrev=8) successfully finished
+2024-01-25 22:31:40,533 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker rev-parse origin/master) successfully finished
+2024-01-25 22:31:40,548 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker describe origin/master --always --tags --long --abbrev=8) successfully finished
+2024-01-25 22:31:40,557 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker rev-list HEAD..f44fc4b85be5d6f6569edeb332c8e2770a39d1cd --count) successfully finished
+2024-01-25 22:31:40,569 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker log 9ad8fed81ea4f81d308e68a301a5ccb84f77f192..origin/master --format="sha:%H%x1Dauthor:%an%x1Ddate:%ct%x1Dsubject:%s%x1Dmessage:%b%x1E" --max-count=100) successfully finished
+2024-01-25 22:31:40,615 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/moonraker for-each-ref --count=100 --sort='-creatordate' --contains=HEAD --merged=origin/master --format='%(if)%(*objecttype)%(then)%(*objecttype) %(*objectname)%(else)%(objecttype) %(objectname)%(end) %(refname)' 'refs/tags') successfully finished
+2024-01-25 22:31:40,616 [git_deploy.py:log_repo_info()] - Git Repo moonraker Detected:
+Owner: Arksine
+Repository Name: moonraker
+Path: /home/pi/moonraker
+Remote: origin
+Branch: master
+Remote URL: https://github.com/Arksine/moonraker.git
+Recovery URL: https://github.com/Arksine/moonraker.git
+Current Commit SHA: 9ad8fed81ea4f81d308e68a301a5ccb84f77f192
+Upstream Commit SHA: f44fc4b85be5d6f6569edeb332c8e2770a39d1cd
+Current Version: v0.8.0-206-g9ad8fed8
+Upstream Version: v0.8.0-286-gf44fc4b8
+Rollback Commit: 9ad8fed81ea4f81d308e68a301a5ccb84f77f192
+Rollback Branch: master
+Rollback Version: v0.8.0-206-g9ad8fed8
+Is Dirty: False
+Is Detached: False
+Is Shallow: False
+Commits Behind Count: 80
+Diverged: False
+2024-01-25 22:31:40,616 [base_deploy.py:log_info()] - Git Repo moonraker: Channel: dev
+2024-01-25 22:31:40,616 [base_deploy.py:log_info()] - Git Repo moonraker: Validity check for git repo passed
+2024-01-25 22:31:40,667 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper status --porcelain -b) successfully finished
+2024-01-25 22:31:40,679 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper branch --list --no-color) successfully finished
+2024-01-25 22:31:40,690 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper remote get-url origin) successfully finished
+2024-01-25 22:31:42,089 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper fetch origin --prune --progress) successfully finished
+2024-01-25 22:31:42,098 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper merge-base --is-ancestor HEAD origin/master) successfully finished
+2024-01-25 22:31:42,104 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper rev-parse HEAD) successfully finished
+2024-01-25 22:31:42,207 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper describe --always --tags --long --dirty --abbrev=8) successfully finished
+2024-01-25 22:31:42,213 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper rev-parse origin/master) successfully finished
+2024-01-25 22:31:42,302 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper describe origin/master --always --tags --long --abbrev=8) successfully finished
+2024-01-25 22:31:42,311 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper rev-list HEAD..5e433fff06148fde3f0046ad7f1121e9af2181d9 --count) successfully finished
+2024-01-25 22:31:42,322 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper log 795ce490a05b2ebae724cff634317f38bc38d721..origin/master --format="sha:%H%x1Dauthor:%an%x1Ddate:%ct%x1Dsubject:%s%x1Dmessage:%b%x1E" --max-count=100) successfully finished
+2024-01-25 22:31:42,417 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/klipper for-each-ref --count=100 --sort='-creatordate' --contains=HEAD --merged=origin/master --format='%(if)%(*objecttype)%(then)%(*objecttype) %(*objectname)%(else)%(objecttype) %(objectname)%(end) %(refname)' 'refs/tags') successfully finished
+2024-01-25 22:31:42,417 [git_deploy.py:log_repo_info()] - Git Repo klipper Detected:
+Owner: Klipper3d
+Repository Name: klipper
+Path: /home/pi/klipper
+Remote: origin
+Branch: master
+Remote URL: https://github.com/Klipper3d/klipper
+Recovery URL: https://github.com/Klipper3d/klipper
+Current Commit SHA: 795ce490a05b2ebae724cff634317f38bc38d721
+Upstream Commit SHA: 5e433fff06148fde3f0046ad7f1121e9af2181d9
+Current Version: v0.12.0-13-g795ce490
+Upstream Version: v0.12.0-98-g5e433fff
+Rollback Commit: 795ce490a05b2ebae724cff634317f38bc38d721
+Rollback Branch: master
+Rollback Version: v0.12.0-13-g795ce490
+Is Dirty: False
+Is Detached: False
+Is Shallow: False
+Commits Behind Count: 85
+Diverged: False
+2024-01-25 22:31:42,417 [base_deploy.py:log_info()] - Git Repo klipper: Channel: dev
+2024-01-25 22:31:42,417 [base_deploy.py:log_info()] - Git Repo klipper: Validity check for git repo passed
+2024-01-25 22:31:42,451 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config status --porcelain -b) successfully finished
+2024-01-25 22:31:42,462 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config branch --list --no-color) successfully finished
+2024-01-25 22:31:42,474 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config remote get-url origin) successfully finished
+2024-01-25 22:31:42,974 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config fetch origin --prune --progress) successfully finished
+2024-01-25 22:31:42,981 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config merge-base --is-ancestor HEAD origin/master) successfully finished
+2024-01-25 22:31:42,987 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config rev-parse HEAD) successfully finished
+2024-01-25 22:31:42,996 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config describe --always --tags --long --dirty --abbrev=8) successfully finished
+2024-01-25 22:31:43,001 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config rev-parse origin/master) successfully finished
+2024-01-25 22:31:43,009 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config describe origin/master --always --tags --long --abbrev=8) successfully finished
+2024-01-25 22:31:43,016 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config rev-list HEAD..e57810d51b5c634aadaca4db923bfcba269ae4b3 --count) successfully finished
+2024-01-25 22:31:43,024 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config log 76a9999986b03abb3aed272dc0a818f13a18ea7e..origin/master --format="sha:%H%x1Dauthor:%an%x1Ddate:%ct%x1Dsubject:%s%x1Dmessage:%b%x1E" --max-count=100) successfully finished
+2024-01-25 22:31:43,034 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mainsail-config for-each-ref --count=100 --sort='-creatordate' --contains=HEAD --merged=origin/master --format='%(if)%(*objecttype)%(then)%(*objecttype) %(*objectname)%(else)%(objecttype) %(objectname)%(end) %(refname)' 'refs/tags') successfully finished
+2024-01-25 22:31:43,034 [git_deploy.py:log_repo_info()] - Git Repo mainsail-config Detected:
+Owner: mainsail-crew
+Repository Name: mainsail-config
+Path: /home/pi/mainsail-config
+Remote: origin
+Branch: master
+Remote URL: https://github.com/mainsail-crew/mainsail-config.git
+Recovery URL: https://github.com/mainsail-crew/mainsail-config.git
+Current Commit SHA: 76a9999986b03abb3aed272dc0a818f13a18ea7e
+Upstream Commit SHA: e57810d51b5c634aadaca4db923bfcba269ae4b3
+Current Version: v1.1.0-1-g76a99999
+Upstream Version: v1.2.1-0-ge57810d5
+Rollback Commit: 76a9999986b03abb3aed272dc0a818f13a18ea7e
+Rollback Branch: master
+Rollback Version: v1.1.0-1-g76a99999
+Is Dirty: False
+Is Detached: False
+Is Shallow: False
+Commits Behind Count: 1
+Diverged: False
+2024-01-25 22:31:43,034 [base_deploy.py:log_info()] - Git Repo mainsail-config: Channel: dev
+2024-01-25 22:31:43,034 [base_deploy.py:log_info()] - Git Repo mainsail-config: Validity check for git repo passed
+2024-01-25 22:31:43,236 [web_deploy.py:_log_client_info()] - Web Client mainsail Detected:
+Repo: mainsail-crew/mainsail
+Channel: stable
+Path: /home/pi/mainsail
+Local Version: v2.8.0
+Remote Version: v2.9.1
+Valid: True
+Fallback Client Detected: False
+Pre-release: False
+Download Url: https://github.com/mainsail-crew/mainsail/releases/download/v2.9.1/mainsail.zip
+Download Size: 2071443
+Content Type: application/zip
+Rollback Version: v2.8.0
+Rollback Repo: mainsail-crew/mainsail
+2024-01-25 22:31:43,252 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion status --porcelain -b) successfully finished
+2024-01-25 22:31:43,264 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion branch --list --no-color) successfully finished
+2024-01-25 22:31:43,275 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion remote get-url origin) successfully finished
+2024-01-25 22:31:43,744 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion fetch origin --prune --progress) successfully finished
+2024-01-25 22:31:43,751 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion merge-base --is-ancestor HEAD origin/main) successfully finished
+2024-01-25 22:31:43,757 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion rev-parse HEAD) successfully finished
+2024-01-25 22:31:43,766 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion describe --always --tags --long --dirty --abbrev=8) successfully finished
+2024-01-25 22:31:43,772 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion rev-parse origin/main) successfully finished
+2024-01-25 22:31:43,780 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion describe origin/main --always --tags --long --abbrev=8) successfully finished
+2024-01-25 22:31:43,787 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion rev-list HEAD..7297fbcaa7ed724eb431605f3a5f28879f010b38 --count) successfully finished
+2024-01-25 22:31:43,795 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion log 0f69cae47bd59ae09752c42cd95054d84877aa33..origin/main --format="sha:%H%x1Dauthor:%an%x1Ddate:%ct%x1Dsubject:%s%x1Dmessage:%b%x1E" --max-count=100) successfully finished
+2024-01-25 22:31:43,805 [shell_command.py:_check_proc_success()] - Command (git -C /home/pi/mobileraker_companion for-each-ref --count=100 --sort='-creatordate' --contains=HEAD --merged=origin/main --format='%(if)%(*objecttype)%(then)%(*objecttype) %(*objectname)%(else)%(objecttype) %(objectname)%(end) %(refname)' 'refs/tags') successfully finished
+2024-01-25 22:31:43,805 [git_deploy.py:log_repo_info()] - Git Repo mobileraker Detected:
+Owner: Clon1998
+Repository Name: mobileraker_companion
+Path: /home/pi/mobileraker_companion
+Remote: origin
+Branch: main
+Remote URL: https://github.com/Clon1998/mobileraker_companion.git
+Recovery URL: https://github.com/Clon1998/mobileraker_companion.git
+Current Commit SHA: 0f69cae47bd59ae09752c42cd95054d84877aa33
+Upstream Commit SHA: 7297fbcaa7ed724eb431605f3a5f28879f010b38
+Current Version: v0.4.0-35-g0f69cae4
+Upstream Version: v0.4.0-41-g7297fbca
+Rollback Commit: 0f69cae47bd59ae09752c42cd95054d84877aa33
+Rollback Branch: main
+Rollback Version: v0.4.0-35-g0f69cae4
+Is Dirty: False
+Is Detached: False
+Is Shallow: False
+Commits Behind Count: 6
+Diverged: False
+2024-01-25 22:31:43,805 [base_deploy.py:log_info()] - Git Repo mobileraker: Channel: dev
+2024-01-25 22:31:43,805 [base_deploy.py:log_info()] - Git Repo mobileraker: Validity check for git repo passed
+2024-01-25 22:34:05,846 [websockets.py:on_close()] - Websocket Closed: ID: 3890766256 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 4.73
+2024-01-25 22:40:19,528 [websockets.py:on_close()] - Websocket Closed: ID: 3909195184 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 6.43
+2024-01-25 22:40:19,763 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 2.76ms
+2024-01-25 22:40:19,764 [websockets.py:open()] - Websocket Opened: ID: 3909862832, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 22:40:19,770 [websockets.py:_handle_identify()] - Websocket 3909862832 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:42:44,431 [app.py:prepare()] - Upload Request Received from 172.16.60.147
+Content-Type: multipart/form-data; boundary=---------------------------347193560128509269404225853515
+2024-01-25 22:42:44,452 [app.py:post()] - Processing Uploaded File: printer.cfg
+2024-01-25 22:42:44,463 [app.py:log_request()] - 201 POST /server/files/upload (172.16.60.147) [_TRUSTED_USER_] 34.99ms
+2024-01-25 22:42:45,540 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2024-01-25 22:42:46,801 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2024-01-25 22:42:49,504 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2024-01-25 22:42:49,505 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2024-01-25 22:42:49,755 [job_state.py:_handle_started()] - Job state initialized: standby
+2024-01-25 22:42:50,026 [klippy_connection.py:_check_ready()] - Klippy ready
+2024-01-25 22:42:51,016 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'extruder']
+2024-01-25 22:43:40,945 [websockets.py:on_close()] - Websocket Closed: ID: 3909862832 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 1.18
+2024-01-25 22:43:41,171 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 2.76ms
+2024-01-25 22:43:41,172 [websockets.py:open()] - Websocket Opened: ID: 3880667920, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 22:43:41,178 [websockets.py:_handle_identify()] - Websocket 3880667920 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:43:42,499 [websockets.py:on_close()] - Websocket Closed: ID: 3880667920 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 1.33
+2024-01-25 22:43:42,721 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 1.18ms
+2024-01-25 22:43:42,721 [websockets.py:open()] - Websocket Opened: ID: 3909243888, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 22:43:42,725 [websockets.py:_handle_identify()] - Websocket 3909243888 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:44:04,291 [app.py:prepare()] - Upload Request Received from 172.16.60.147
+Content-Type: multipart/form-data; boundary=------------------------74deb4b888fbdf0e
+2024-01-25 22:44:06,122 [app.py:post()] - Processing Uploaded File: Dock_mount_fixed_v2(1)_ABS_2h24m.gcode
+2024-01-25 22:44:06,318 [shell_command.py:pipe_data_received()] - INFO:metadata:Object Processing is disabled
+
+2024-01-25 22:44:06,433 [shell_command.py:_check_proc_success()] - Command (/home/pi/moonraker-env/bin/python /home/pi/moonraker/moonraker/components/file_manager/metadata.py -p /home/pi/printer_data/gcodes -f "Dock_mount_fixed_v2(1)_ABS_2h24m.gcode") successfully finished
+2024-01-25 22:44:06,443 [app.py:log_request()] - 201 POST /api/files/local (172.16.60.147) [_TRUSTED_USER_] 2153.29ms
+2024-01-25 22:44:06,487 [job_state.py:_status_update()] - Job Started: Dock_mount_fixed_v2(1)_ABS_2h24m.gcode
+2024-01-25 22:44:28,603 [app.py:log_request()] - 101 GET /websocket (172.16.60.150) [_TRUSTED_USER_] 2.70ms
+2024-01-25 22:44:28,603 [websockets.py:open()] - Websocket Opened: ID: 3909351120, Proxied: True, User Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36, Host Name: 172.16.60.149
+2024-01-25 22:44:28,612 [websockets.py:_handle_identify()] - Websocket 3909351120 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:44:36,362 [websockets.py:on_close()] - Websocket Closed: ID: 3909351120 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 7.76
+2024-01-25 22:44:37,386 [app.py:log_request()] - 101 GET /websocket (172.16.60.150) [_TRUSTED_USER_] 3.38ms
+2024-01-25 22:44:37,386 [websockets.py:open()] - Websocket Opened: ID: 3880699568, Proxied: True, User Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36, Host Name: 172.16.60.149
+2024-01-25 22:44:37,398 [websockets.py:_handle_identify()] - Websocket 3880699568 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 22:44:57,873 [klippy_connection.py:_process_status_update()] - Klippy has shutdown
+2024-01-25 22:44:57,886 [proc_stats.py:_handle_shutdown()] - 
+Moonraker System Usage Statistics:
+System Time: 1706219067.992560, Usage: 2.79%, Memory: 35996 kB
+System Time: 1706219068.991421, Usage: 12.44%, Memory: 35828 kB
+System Time: 1706219069.995282, Usage: 6.58%, Memory: 35828 kB
+System Time: 1706219070.996264, Usage: 3.26%, Memory: 35828 kB
+System Time: 1706219071.997463, Usage: 3.32%, Memory: 35828 kB
+System Time: 1706219072.998389, Usage: 4.59%, Memory: 35828 kB
+System Time: 1706219073.998478, Usage: 3.52%, Memory: 35828 kB
+System Time: 1706219074.999723, Usage: 3.15%, Memory: 35828 kB
+System Time: 1706219075.999729, Usage: 2.7%, Memory: 35828 kB
+System Time: 1706219077.002171, Usage: 3.06%, Memory: 35832 kB
+System Time: 1706219077.999952, Usage: 38.97%, Memory: 35820 kB
+System Time: 1706219079.001144, Usage: 3.89%, Memory: 35832 kB
+System Time: 1706219080.001721, Usage: 1.5%, Memory: 35832 kB
+System Time: 1706219081.002623, Usage: 3.06%, Memory: 35832 kB
+System Time: 1706219082.003530, Usage: 1.6%, Memory: 35832 kB
+System Time: 1706219083.006699, Usage: 2.16%, Memory: 35832 kB
+System Time: 1706219084.008539, Usage: 3.26%, Memory: 35832 kB
+System Time: 1706219085.009621, Usage: 3.14%, Memory: 35832 kB
+System Time: 1706219086.010776, Usage: 3.12%, Memory: 35832 kB
+System Time: 1706219087.011299, Usage: 3.08%, Memory: 35832 kB
+System Time: 1706219088.011874, Usage: 3.2%, Memory: 35832 kB
+System Time: 1706219089.012994, Usage: 4.13%, Memory: 35832 kB
+System Time: 1706219090.014060, Usage: 3.1%, Memory: 35832 kB
+System Time: 1706219091.015119, Usage: 3.07%, Memory: 35832 kB
+System Time: 1706219092.015659, Usage: 3.22%, Memory: 35832 kB
+System Time: 1706219093.016752, Usage: 3.37%, Memory: 35832 kB
+System Time: 1706219094.018544, Usage: 3.24%, Memory: 35832 kB
+System Time: 1706219095.019277, Usage: 3.13%, Memory: 35832 kB
+System Time: 1706219096.021414, Usage: 3.2%, Memory: 35832 kB
+System Time: 1706219097.023874, Usage: 3.1%, Memory: 35832 kB
+CPU Temperature: 53.069
+2024-01-25 22:44:57,891 [proc_stats.py:_handle_shutdown()] - Throttled Flags: 
+2024-01-25 22:45:05,552 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2024-01-25 22:45:06,813 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2024-01-25 22:45:08,778 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2024-01-25 22:45:08,779 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2024-01-25 22:45:08,780 [klippy_connection.py:_check_ready()] - 
+Can not update MCU 'mcu' config as it is shutdown
+Once the underlying issue is corrected, use the
+"FIRMWARE_RESTART" command to reset the firmware, reload the
+config, and restart the host software.
+Error configuring printer
+
+2024-01-25 22:45:13,244 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2024-01-25 22:45:14,505 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2024-01-25 22:45:17,221 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2024-01-25 22:45:17,223 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2024-01-25 22:45:17,472 [job_state.py:_handle_started()] - Job state initialized: standby
+2024-01-25 22:45:17,745 [klippy_connection.py:_check_ready()] - Klippy ready
+2024-01-25 22:45:18,985 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'extruder']
+2024-01-25 22:45:24,499 [job_state.py:_status_update()] - Job Started: Dock_mount_fixed_v2(1)_ABS_2h24m.gcode
+2024-01-25 23:03:47,591 [websockets.py:write_to_socket()] - Websocket closed while writing: 3880699568
+2024-01-25 23:03:52,389 [websockets.py:on_close()] - Websocket Closed: ID: 3880699568 Close Code: None, Close Reason: None, Pong Time Elapsed: 37.23
+2024-01-25 23:04:37,161 [websockets.py:on_close()] - Websocket Closed: ID: 3909243888 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 4.43
+2024-01-25 23:04:37,393 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 2.78ms
+2024-01-25 23:04:37,394 [websockets.py:open()] - Websocket Opened: ID: 3880350000, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 23:04:37,399 [websockets.py:_handle_identify()] - Websocket 3880350000 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 23:06:53,732 [websockets.py:on_close()] - Websocket Closed: ID: 3880350000 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 6.34
+2024-01-25 23:06:53,954 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 2.34ms
+2024-01-25 23:06:53,955 [websockets.py:open()] - Websocket Opened: ID: 3890881008, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 23:06:53,960 [websockets.py:_handle_identify()] - Websocket 3890881008 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 23:06:55,320 [websockets.py:on_close()] - Websocket Closed: ID: 3890881008 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 1.37
+2024-01-25 23:06:55,539 [app.py:log_request()] - 101 GET /websocket (172.16.60.147) [_TRUSTED_USER_] 1.19ms
+2024-01-25 23:06:55,540 [websockets.py:open()] - Websocket Opened: ID: 3890947856, Proxied: True, User Agent: BBL-Slicer/v01.08.02.56 (dark) Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko), Host Name: voron.local
+2024-01-25 23:06:55,543 [websockets.py:_handle_identify()] - Websocket 3890947856 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 23:09:29,211 [app.py:prepare()] - Upload Request Received from 172.16.60.147
+Content-Type: multipart/form-data; boundary=---------------------------5418349951191289692430807528
+2024-01-25 23:09:29,229 [app.py:post()] - Processing Uploaded File: printer.cfg
+2024-01-25 23:09:29,240 [app.py:log_request()] - 201 POST /server/files/upload (172.16.60.147) [_TRUSTED_USER_] 30.35ms
+2024-01-25 23:41:48,221 [app.py:log_request()] - 101 GET /websocket (172.16.60.150) [_TRUSTED_USER_] 2.76ms
+2024-01-25 23:41:48,221 [websockets.py:open()] - Websocket Opened: ID: 3890910672, Proxied: True, User Agent: Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36, Host Name: 172.16.60.149
+2024-01-25 23:41:48,252 [websockets.py:_handle_identify()] - Websocket 3890910672 Client Identified - Name: mainsail, Version: 2.8.0, Type: web
+2024-01-25 23:43:38,467 [websockets.py:write_to_socket()] - Websocket closed while writing: 3890910672
+2024-01-25 23:43:43,224 [websockets.py:on_close()] - Websocket Closed: ID: 3890910672 Close Code: None, Close Reason: None, Pong Time Elapsed: 44.95
